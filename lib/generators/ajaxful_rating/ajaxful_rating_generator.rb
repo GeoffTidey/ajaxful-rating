@@ -1,7 +1,7 @@
 require 'rails/generators/migration'
 class AjaxfulRatingGenerator < Rails::Generators::NamedBase
   include Rails::Generators::Migration
-  
+
   def self.source_root
     @_axr_root ||= File.expand_path("../templates", __FILE__)
   end
@@ -10,11 +10,11 @@ class AjaxfulRatingGenerator < Rails::Generators::NamedBase
     model_file = File.join('app/models', "#{file_path}.rb")
     raise "User model (#{model_file}) must exits." unless File.exists?(model_file)
     class_collisions 'Rate'
-    template 'model.rb', File.join('app/models', class_path, "rate.rb")
+    template 'model.rb', File.join('app/models', class_path, 'rate.rb')
   end
 
-  def create_migration
-    migration_template 'migration.rb', "db/migrate/create_rates.rb"
+  def create_ajaxful_rating_migration
+    migration_template 'migration.rb', 'db/migrate/create_rates.rb'
   end
 
   def create_layout
@@ -29,7 +29,7 @@ class AjaxfulRatingGenerator < Rails::Generators::NamedBase
   # Implement the required interface for Rails::Generators::Migration.
   def self.next_migration_number(dirname) #:nodoc:
     if ActiveRecord::Base.timestamped_migrations
-      Time.now.utc.strftime("%Y%m%d%H%M%S")
+      Time.now.utc.strftime('%Y%m%d%H%M%S')
     else
       "%.3d" % (current_migration_number(dirname) + 1)
     end
